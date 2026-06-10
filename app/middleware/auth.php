@@ -9,7 +9,7 @@ function usuarioAutenticado():bool {
         && is_array($_SESSION['usuario']);
 }
 
-function exigirAutenticado():void {
+function exigirAutenticacao():void {
     if(!usuarioAutenticado()) {
         $_SESSION['mensagem'] =
             'Faça login para acessar a área restrita';

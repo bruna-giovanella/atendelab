@@ -32,7 +32,7 @@ switch ($controller) {
         break;
 
     case 'usuarios':
-        exigirAutenticado();
+        exigirAutenticacao();
         $usuarioController = new UsuariosController();
 
         switch ($action) {
@@ -53,7 +53,8 @@ switch ($controller) {
                 break;
             default:
                 http_response_code(404);
-                echo 'Controller não encontrado.';
+                echo 'Acao de usuarios nao encontrada.';
         }
+        break;
 
 }

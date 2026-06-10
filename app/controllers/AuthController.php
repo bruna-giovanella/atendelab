@@ -41,7 +41,7 @@ class AuthController {
         $email = trim($_POST['email'] ?? null);
         $senha = $_POST['senha'] ?? null;
 
-        if ($email === '' && $senha === '') {
+        if ($email === '' || $senha === '') {
             $_SESSION['erro_login'] = 'Informe um email e senha válidos';
 
             header('Location: ?controller=auth&action=login');
@@ -50,9 +50,10 @@ class AuthController {
 
         $sql = 'SELECT id, nome, email, senha, perfil, status
                 FROM usuarios
-                WHERE email = email
+                WHERE email = :email
                 LIMIT 1';
 
+        $stmt = $this->pdo->prepare($sql);
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->bindValue(':email', $email);
@@ -87,7 +88,7 @@ class AuthController {
 
     public function dashboard():void {
 
-        exigirAutenticado();
+        exigirAutenticacao();
 
         $usuario = usuarioAtual();
 
