@@ -5,7 +5,7 @@ class UsuariosController
 
     private PDO $pdo;
 
-    public function __construct($pdo) {
+    public function __construct() {
         require __DIR__.'/../../config/database.php';
         $this->pdo = $pdo;
     }
