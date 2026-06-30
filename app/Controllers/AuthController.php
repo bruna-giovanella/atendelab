@@ -22,7 +22,7 @@ class AuthController {
             exit();
         }
 
-        $erro = $_SESSION['erro_login'] ?? null;
+        $erroLogin = $_SESSION['erro_login'] ?? null;
         $mensagem = $_SESSION['mensagem'] ?? null;
 
         unset($_SESSION['erro_login'], $_SESSION['mensagem']);
@@ -53,7 +53,6 @@ class AuthController {
                 WHERE email = :email
                 LIMIT 1';
 
-        $stmt = $this->pdo->prepare($sql);
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->bindValue(':email', $email);
@@ -96,27 +95,27 @@ class AuthController {
     }
 
     public function logout():void {
-         $_SESSION = [];
+        $_SESSION = [];
 
-         if (ini_get('session.use_cookies')) {
-             $params = session_get_cookie_params();
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
 
-             setcookie(
-                 session_name(),
-                 '',
-                 time() - 42000,
-                 $params['path'],
-                 $params['domain'],
-                 $params['secure'],
-                 $params['httponly']
-             );
-         }
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
 
-         session_destroy();
+        session_destroy();
 
-         session_start();
+        session_start();
 
-         $_SESSION['mensagem'] = 'Sessão encerrada com sucesso';
+        $_SESSION['mensagem'] = 'Sessão encerrada com sucesso';
 
         header('Location: ?controller=auth&action=login');
         exit;
